@@ -14,8 +14,6 @@ const getEthereumContract = () => {
     return transactionsContract;
 
 };
-
-
 export const TransactionProvider = ({ children }) => {
     const [currentAccount, setCurrentAccount] = useState("");
     const [formData, setformData] = useState({ addressTo: "", amount: "", keyword: "", message: "" });
@@ -37,7 +35,6 @@ export const TransactionProvider = ({ children }) => {
     
             if (accounts.length) {
                 setCurrentAccount(accounts[0]);
-            
                 // getAllTransactions();
             }else{
                 console.log('No Accounts found')
@@ -48,6 +45,8 @@ export const TransactionProvider = ({ children }) => {
             throw new Error("No ethereum object found");
         }
     }
+
+
     const connectWallet = async () => {
         try {
             if (!ethereum) return alert('Make sure you have metamask!');
@@ -81,7 +80,7 @@ export const TransactionProvider = ({ children }) => {
         });
         const transactionHash = await transactionContract.addToBlockchain(addressTo, parsedAmount, message, keyword);
 
-
+          
         setIsLoading(true);
         console.log(`Loading - ${transactionHash.hash}`);
         await transactionHash.wait();
@@ -89,15 +88,38 @@ export const TransactionProvider = ({ children }) => {
         console.log(`Success - ${transactionHash.hash}`);
 
         const transactionCount = await transactionContract.getTransactionCount();
-        setTransactionCount(transactionCount.toNumber());
-
+        const sendTransaction = async () => {
+            try {
+              // ...existing code...
+          
+              // Write transaction data to Firebase Realtime Database
+              const transactionData = {
+                sender: currentAccount,
+                receiver: addressTo,
+                amount: parsedAmount.toString(),
+                message: message,
+                timestamp: Date.now(),
+                keyword: keyword,
+              };
+          
+              firebase.database().ref('transactionHistory').push(transactionData);
+          
+              // ...existing code...
+            } catch (error) {
+              console.log(error);
+              throw new Error("No ethereum object found");
+            }
+          };
+          
+        
         } catch (error) {
             console.log(error);
 
             throw new Error("No ethereum object found");
         }
-    };
 
+    };
+    
 
     useEffect(() => {
         checkIfWalletIsConnected();
