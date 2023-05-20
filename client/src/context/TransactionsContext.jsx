@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { contractABI, contractAddress } from "../utils/constants";
+import { writeTransactionData } from './firebase';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/database';
 
 export const TransactionContext = React.createContext();
+
 
 const { ethereum } = window;
 
@@ -11,9 +15,10 @@ const getEthereumContract = () => {
     const signer = provider.getSigner();
     const transactionsContract = new ethers.Contract(contractAddress, contractABI, signer);
   
-    return transactionsContract;
-
+    return transactionsContract;    
+    
 };
+
 export const TransactionProvider = ({ children }) => {
     const [currentAccount, setCurrentAccount] = useState("");
     const [formData, setformData] = useState({ addressTo: "", amount: "", keyword: "", message: "" });
@@ -36,6 +41,7 @@ export const TransactionProvider = ({ children }) => {
             if (accounts.length) {
                 setCurrentAccount(accounts[0]);
                 // getAllTransactions();
+                    
             }else{
                 console.log('No Accounts found')
             }
@@ -88,38 +94,16 @@ export const TransactionProvider = ({ children }) => {
         console.log(`Success - ${transactionHash.hash}`);
 
         const transactionCount = await transactionContract.getTransactionCount();
-        const sendTransaction = async () => {
-            try {
-              // ...existing code...
-          
-              // Write transaction data to Firebase Realtime Database
-              const transactionData = {
-                sender: currentAccount,
-                receiver: addressTo,
-                amount: parsedAmount.toString(),
-                message: message,
-                timestamp: Date.now(),
-                keyword: keyword,
-              };
-          
-              firebase.database().ref('transactionHistory').push(transactionData);
-          
-              // ...existing code...
-            } catch (error) {
-              console.log(error);
-              throw new Error("No ethereum object found");
-            }
-          };
-          
-        
-        } catch (error) {
+        await writeTransactionData(currentAccount, addressTo, parsedAmount.toString(), message, Date.now(), keyword);
+    }
+        catch (error) {
             console.log(error);
 
             throw new Error("No ethereum object found");
         }
 
     };
-    
+
 
     useEffect(() => {
         checkIfWalletIsConnected();
