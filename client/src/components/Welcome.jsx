@@ -12,6 +12,7 @@ const Input = ({ placeholder , name , type , value , handleChange}) => {
             placeholder={placeholder}
             type={type}
             step="0.0001"
+            min="0.0001"
             value={value}
             onChange={(e) => handleChange(e, name)}
             className="my-2 w-full rounded-lg p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
@@ -94,7 +95,7 @@ const Welcome= () => {
 
                 <div className="p-5 sm:w-96 w-full border-[1px] border flex flex-col justify-start items-center blue-glassmorphism">
                 <Input placeholder="Address To" name="addressTo" type="text" handleChange={handleChange} />
-            <Input placeholder="Amount (ETH)" name="amount" type="number" handleChange={handleChange} />
+            <Input placeholder="Amount (ETH)" name="amount" type="number"min="0.0001" handleChange={handleChange} />
             <Input placeholder="Keyword (Gif)" name="keyword" type="text" handleChange={handleChange} />
             <Input placeholder="Enter Message" name="message" type="text" handleChange={handleChange} />
                 <div className="h-[1px] w-full bg-[#0d4146] my-2" ></div>

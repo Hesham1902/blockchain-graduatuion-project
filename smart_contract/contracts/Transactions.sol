@@ -7,8 +7,8 @@ contract Transactions {
 
     event Transfer(
         address from,
-        address reciever,
-        uint amount,
+        address receiver,
+        uint256 amount,
         string message,
         uint256 timestamp,
         string keyword
@@ -17,7 +17,7 @@ contract Transactions {
     struct TransferStruct {
         address sender;
         address receiver;
-        uint amount;
+        uint256 amount;
         string message;
         uint256 timestamp;
         string keyword;
@@ -31,6 +31,8 @@ contract Transactions {
         string memory _message,
         string memory _keyword
     ) public {
+        require(_amount > 0, "Invalid Amount");
+        require(bytes(_message).length > 0, "Empty Message"); // Add this line to require a non-empty message
         transactionCount++;
         transactions.push(
             TransferStruct(

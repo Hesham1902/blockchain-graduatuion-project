@@ -1,6 +1,6 @@
 ### deploying the contract using scripts
 npx hardhat run scripts/deploy.js --network goerli
-
+npx hardhat run scripts/deploy.js --network sepolia
 
 ### entering the console mode
 npx hardhat console
@@ -8,6 +8,7 @@ npx hardhat console
 
 ### entering the console mode with specific network
 npx hardhat console --network goerli
+npx hardhat console --network sepolia
 
 
 
