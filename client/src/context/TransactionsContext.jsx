@@ -25,7 +25,6 @@ export const TransactionProvider = ({ children }) => {
     const [transactionCount, setTransactionCount] = useState(localStorage.getItem('transactionCount'));
     const [transactions, setTransactions] = useState([]);
 
-
     //hard function to understand
     const handleChange = (e, name) => {
         setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
@@ -116,7 +115,6 @@ export const TransactionProvider = ({ children }) => {
             }]
         });
         const transactionHash = await transactionContract.addToBlockchain(addressTo, parsedAmount, message, keyword);
-
           
         setIsLoading(true);
         console.log(`Loading - ${transactionHash.hash}`);
@@ -132,12 +130,10 @@ export const TransactionProvider = ({ children }) => {
     }
         catch (error) {
             console.log(error);
-
             throw new Error("No ethereum object found");
         }
 
     };
-
 
     useEffect(() => {
         checkIfWalletIsConnected();
@@ -145,7 +141,6 @@ export const TransactionProvider = ({ children }) => {
 
     return (
     <TransactionContext.Provider value= {{ 
-
         connectWallet,
         currentAccount,
         formData,
