@@ -4,7 +4,7 @@ import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 import { TransactionContext } from "../../context/TransactionsContext";
 import { shortenAddress } from "../../utils/shortenAddress";
-import { Loader } from "../Loader";
+import { Loader } from "..";
 import "./welcome.css";
 
 const Input = ({ placeholder, name, type, value, handleChange }) => {

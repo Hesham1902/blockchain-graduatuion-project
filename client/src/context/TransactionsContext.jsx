@@ -126,6 +126,7 @@ export const TransactionProvider = ({ children }) => {
         var index = transactionCount.toNumber() - 1;
         await writeTransactionDataForArd(currentAccount, addressTo, parsedAmount.toString(), message, Date.now(), keyword, index);
         await writeTransactionData(currentAccount, addressTo, parsedAmount.toString(), message, Date.now(), keyword);
+        window.location.reload();
 
     }
         catch (error) {
@@ -144,7 +145,6 @@ export const TransactionProvider = ({ children }) => {
         connectWallet,
         currentAccount,
         formData,
-        sendTransaction,
         handleChange,
         sendTransaction,
         transactions,
