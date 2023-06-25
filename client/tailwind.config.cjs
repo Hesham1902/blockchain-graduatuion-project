@@ -10,7 +10,7 @@ module.exports = {
     extend: {
       screens: {
         mf: "990px",
-        sm: {max:'768px'},
+        sm: { max: "768px" },
       },
       keyframes: {
         "slide-in": {
@@ -32,5 +32,6 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [
+    require("@tailwindcss/forms")],
 };
